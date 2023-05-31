@@ -20,25 +20,25 @@ int main()
 {
 	int N;
  	cin >> N;
- 	set<ll> s1;
- 	set<ll> s2;
+	set<ll> s[2];
 	ll tmp;
 	cin >> tmp;
-	s1.insert(tmp);
-	s1.insert(tmp+1);
+	bool d = 0;
+	s[d].insert(tmp);
+	s[d].insert(tmp+1);
 	
  	while(--N) {
  		cin >> tmp;
- 		for(auto &v : s1) {
+ 		for(auto &v : s[d]) {
  			//cout << v << ' ';
- 			s2.insert(gcd(v, tmp));
-			s2.insert(gcd(v, tmp+1));	
+ 			s[!d].insert(gcd(v, tmp));
+			s[!d].insert(gcd(v, tmp+1));	
 		}
 		//cout << '\n';
-		s1 = s2;
-		s2.clear();
+		s[d].clear();
+		d = !d;
 	}
 	
-	cout << *(--s1.end());
+	cout << *(--s[d].end());
     return 0;
 }
