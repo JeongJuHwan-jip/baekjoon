@@ -11,18 +11,20 @@ string S;
 string arr[100];
 
 pii daum[100][100];
-bool visited[100][100] = {0, };
+int state[100][100] = {0, };
 
 bool InBoard(int y, int x) {
     return y>=0 && y<N && x>=0 && x<M;
 }
 
 const int INF = 987654321;
+const int DISCOVERED = 1;
+const int FINISHED = 2;
 
 int dfs(int y, int x, int idx) {
     if(arr[y][x] != S[idx]) return -1;
-    if(visited[y][x]) return INF;
-    visited[y][x] = 1;
+    if(state[y][x] == DISCOVERED) return INF;
+    state[y][x] = DISCOVERED;
     int ret = (idx+1 == L);
     int val = 0;
     for(int d=0; d<4; ++d) {
@@ -36,6 +38,7 @@ int dfs(int y, int x, int idx) {
             daum[y][x] = pii(ny, nx); 
         }
     }
+    state[y][x] = FINISHED;
     return ret = ret+val;
 }
 
@@ -47,7 +50,7 @@ int solve() {
     }
     
     int ans = dfs(0, 0, 0);
-    if(ans >= INF) return -1;
+    if(ans >= INF || ans == 0) return -1;
     return ans;
 }
 
